@@ -1,0 +1,138 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int gravarTexto(int vetor[], int tam)
+{
+
+	FILE *arq;
+	int i;
+	int result;
+	arq = fopen("ArqGrav.txt", "wt"); // Cria um arquivo texto para gravação
+	if (arq == NULL){ // Se nào conseguiu criar
+		printf("Problemas na CRIACAO do arquivo\n");
+	 	return 0;
+	}
+    for(i=1 ; i < tam ; i++){
+        result = fprintf(arq,"%d\n", vetor[i]);
+		if (result == EOF)
+			printf("Erro na Gravacao\n");}
+	fclose(arq);
+}
+
+
+
+int sequentialSearch(int vetor[], int tam, int ele)
+
+{ int i;
+
+for (i=0;i<tam;i++)
+
+{ if(vetor[i]==ele) {
+
+
+printf("posicao: %d", i);
+
+return 1;
+
+}
+
+}
+
+return 0;
+
+}
+
+
+void selectionSort(int vetor[], int tam) {
+
+ int i, j, min, aux;
+
+ for (i = 0; i < (tam-1); i++) {
+ 	
+
+ min = i;
+
+ for (j = (i+1); j < tam; j++) {
+
+
+
+ if (vetor[j] < vetor[min]) {
+
+ min = j;
+
+ }
+
+ }
+
+ if (i != min) {
+
+ aux = vetor[i];
+
+ vetor[i] = vetor[min];
+
+ vetor[min] = aux;
+
+ }
+
+ }
+
+}
+
+
+int main(int argc, char *argv[]) {
+
+int tam = 15;	
+int vetor1[5], vetor2[5], vetor3[5], vetor4[15];
+int i,j, p=0,ele;
+
+for(i=0;i<5;i++){
+
+printf("Digite o vetor 1, valor %d: ",i);
+scanf("%d",&vetor1[i]);
+
+}
+
+for(i=0;i<5;i++){
+	
+printf("Digite o vetor2, valor %d: ",i);
+scanf("%d",&vetor2[i]);
+
+}
+
+for(i=0;i<5;i++){
+
+printf("Digite o vetor3, valor %d: ",i);
+scanf("%d",&vetor3[i]);
+
+}
+
+		for(i=0;i<5;i++){
+	
+		vetor4[p]=vetor1[i];
+		vetor4[p+1] = vetor2[i];
+		vetor4[p+2] = vetor3[i];
+		
+		p=p+3;
+		
+		}
+
+
+selectionSort(vetor4,tam);
+
+for(i=0;i<15;i++){
+
+printf("%d", vetor4[i]);
+
+}
+
+
+printf("\n\n Busca: ");
+scanf("%d",&ele);
+
+
+sequentialSearch(vetor4,tam,ele);
+
+gravarTexto(vetor4,tam);
+
+	
+}

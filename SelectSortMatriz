@@ -1,0 +1,73 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int matriz[3][3]={{3,6,9},{2,4,6},{1,2,3}};
+int tam = 3 ;
+
+
+void selectionSort() {
+
+ int i, j,k, min, aux;
+
+ for (i = 0; i < (tam-1); i++) {
+
+ min = i;
+
+ for (j = (i+1); j < tam; j++) {
+
+
+ if (matriz[j][0] < matriz[min][0]) {
+
+ min = j;
+
+ }
+
+ }
+
+ if (i != min) {
+ for(k=0;k < 3 ; k++){
+ 
+ aux = matriz[i][k] ;
+
+ matriz[i][k] = matriz[min][k];
+
+ matriz[min][k] = aux;
+ 
+}
+
+ }
+
+ }
+
+}
+
+
+void imprimirMatriz(){
+
+int i,j;
+
+for(i=0;i<tam;i++){
+	
+		for (j=0;j<tam;j++){
+		
+		printf(" %d ",matriz[i][j]);
+		
+	
+		}
+		printf("\n");
+	}
+	
+}
+
+int main(int argc, char *argv[]){
+	
+	
+	
+	selectionSort();
+	imprimirMatriz();
+	
+	
+
+	
+}

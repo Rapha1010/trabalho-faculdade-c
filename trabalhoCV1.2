@@ -42,8 +42,6 @@ void selectionSort(int vetor[], int tam) {
  for (j = (i+1); j < tam; j++) {
 
 
- troca ++;
-
  if (vetor[j] < vetor[min]) {
 
  min = j;
@@ -53,6 +51,8 @@ void selectionSort(int vetor[], int tam) {
  }
 
  if (i != min) {
+ 
+ troca ++;
 
  aux = vetor[i];
 

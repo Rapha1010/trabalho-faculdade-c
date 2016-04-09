@@ -1,0 +1,472 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <conio.h>
+
+int troca = 0;
+int comparacao = 0;
+int tam;
+
+void selectionSort(int vetor[], int tam) {
+
+ int i, j, min, aux;
+
+ for (i = 0; i < (tam-1); i++) {
+ 	
+ comparacao++;	
+
+ min = i;
+
+ for (j = (i+1); j < tam; j++) {
+
+
+ if (vetor[j] < vetor[min]) {
+
+ min = j;
+
+ }
+
+ }
+
+ if (i != min) {
+ 
+ troca ++;
+
+ aux = vetor[i];
+
+ vetor[i] = vetor[min];
+
+ vetor[min] = aux;
+
+ }
+
+ }
+
+}
+
+
+void insertionSort(int array[], int tamanho) {
+      int i, j, tmp;
+      for (i = 1; i < tamanho; i++) {
+            j = i;
+            comparacao++;
+            while (j > 0 && array[j - 1] > array[j]) {
+            	troca ++;
+                  tmp = array[j];
+                  array[j] = array[j - 1];
+                  array[j - 1] = tmp;
+                  j--;
+            }
+      }
+}
+
+
+void quickSort(int vetor[], int esquerda, int direita) {
+
+ //onde esquerda aponta o início do vetor e direita o final do vetor
+
+ int i, j, x, y;
+
+ i = esquerda;
+
+ j = direita;
+
+ x = vetor[(esquerda + direita) / 2];
+
+ while(i <= j){ 
+ while(vetor[i] < x && i < direita){
+ i++; 
+ comparacao++;
+ }
+ while(vetor[j] > x && j > esquerda){ 
+ j--;
+ comparacao++;
+  } 
+ 
+ if(i <= j){ y = vetor[i];
+ 
+ troca++;
+ vetor[i] = vetor[j];
+
+ vetor[j] = y;
+
+ i++;
+
+ j--;
+
+ }
+
+ }
+
+ if(j > esquerda) { quickSort(vetor, esquerda, j); }
+
+ if(i < direita) { quickSort(vetor, i, direita); }
+
+}
+
+
+void merge(int vetor[], int tam) {
+
+ int mid;
+
+ int i, j, k;
+
+ int* tmp;
+
+ tmp = (int*) malloc(tam * sizeof(int));
+
+ if (tmp == NULL) { exit(1); }
+
+ mid = tam / 2;
+
+ i = 0;
+
+ j = mid;
+
+ k = 0;
+
+ while (i < mid && j < tam) {
+ 	
+ if (vetor[i] <= vetor[j]) { tmp[k] = vetor[i++]; }
+
+ else { tmp[k] = vetor[j++]; }
+
+ ++k;
+
+ }
+
+ if (i == mid) {
+
+ while (j < tam) { tmp[k++] = vetor[j++]; }
+
+ } else {
+
+ while (i < mid) { tmp[k++] = vetor[i++]; }
+
+ }
+
+ for (i = 0; i < tam; ++i) {
+
+ vetor[i] = tmp[i]; }
+
+ free(tmp);
+
+}
+
+void mergeSort(int vetor[], int tam) {
+
+ int mid;
+
+ if (tam > 1) {
+
+ mid = tam / 2;
+
+ mergeSort(vetor, mid);
+
+ mergeSort(vetor + mid, tam - mid);
+
+ merge(vetor, tam);
+
+ }
+
+}
+
+
+void shellSort(int *vetor, int tam) {
+
+ int i , j , value;
+
+ int gap = 1;
+
+ while (gap < tam) { gap = 3*gap+1; }
+
+ while (gap > 1) {
+
+ gap /= 3;
+
+ for(i = gap; i < tam; i++) {
+
+ value = vetor[i];
+
+ j = i - gap;
+
+ while (j >= 0 && value < vetor[j]) {
+
+ vetor[j + gap] = vetor[j];
+
+ j -= gap;
+
+ }
+
+ vetor[j + gap] = value;
+
+ }
+
+ }
+
+}
+
+
+void heapSort(int vetor[], int tam)
+
+{ int i = tam/2, pai, filho, t;
+
+ for (;;)
+
+ { if (i > 0)
+
+ { i--;
+
+ t = vetor[i]; }
+
+ else
+
+ { tam--;
+
+ if (tam == 0) { return; }
+
+ t = vetor[tam];
+
+ vetor[tam] = vetor[0]; }
+
+ pai = i;
+
+ filho = i*2; //Será feita a comparação com o filho da esquerda.
+
+ while (filho < tam)
+
+ { //Se o filho da esquerda for menor do que o filho da direita,
+
+ //então será feita a troca do filho que será comparado.
+
+ if ((filho + 1 < tam) && (vetor[filho + 1] > vetor[filho]))
+
+ { filho++; }
+
+ if (vetor[filho] > t)
+
+ { vetor[pai] = vetor[filho];
+
+ pai = filho;
+
+ filho = pai*2 + 1;
+
+ } else { break; }
+
+ } vetor[pai] = t;
+
+ }
+
+}
+
+
+void bubbleSort(int vetor[], int tam){
+	
+	int i,j,aux;
+	
+	for(int i=tam-1; i >= 1; i--){
+
+		comparacao++;
+		
+		for( int j=0; j < i ; j++){
+
+			if(vetor[j]>vetor[j+1]) {
+				
+			troca++;
+
+			aux = vetor[j];
+
+			vetor[j] = vetor[j+1];
+
+			vetor[j+1] = aux;
+
+			}	 
+	
+		}	
+		
+	 }
+
+	}
+	
+	
+void LeitorTxt(){
+FILE *arq;
+char Linha[100];
+char *result;
+int i;
+arq = fopen("ArqGrav.txt", "rt");
+if (arq == NULL) { printf("Problemas na abertura do arquivo\n"); }
+i = 1;
+while (!feof(arq)){ 
+result = fgets(Linha, 100, arq); 
+if (result) 
+printf("%s",Linha);
+i++;
+}
+
+fclose(arq);
+
+}	
+
+
+
+void GravTxt(int vetor[],int tam) {
+
+FILE *arq;
+
+int i;
+
+int result;
+
+arq = fopen("ArqGrav.txt", "wt"); 
+
+if (arq == NULL) { printf("Problemas na CRIACAO do arquivo\n"); }
+
+for (i = 0; i<tam;i++){ 
+
+
+result = fprintf(arq,"%d\n",vetor[i]);
+
+if (result == EOF) printf("Erro na Gravacao\n");
+
+}
+
+fclose(arq);
+
+}
+
+
+void imprimirVetor(int vetor[],int tam){
+	
+	int i ;
+   	
+	for(i=0; i<tam; i++){
+		
+		
+		printf("%d",vetor[i]);	
+		printf("\n");
+		
+	}
+	
+	
+	
+}
+
+void implementarVetorR(int vetor[], int tam) {
+	int x,j;
+	srand( (unsigned)time(NULL) );
+	for(int i = 0; i<tam; i++){
+		x = rand()%tam;
+		
+			for(j = 0; j<i; j++)
+			{
+				if (x==vetor[j])
+				{
+					x = rand()%tam;
+					j=-1;
+				}				
+			}
+
+		vetor[i] = x; 
+	}
+}
+
+void OrdernadorDesc(int array[], int tamanho) {
+      int i, j, tmp;
+      for (i = 1; i < tamanho; i++) {
+            j = i;
+            while (j > 0 && array[j - 1] < array[j]) {
+                  tmp = array[j];
+                  array[j] = array[j - 1];
+                  array[j - 1] = tmp;
+                  j--;
+            }
+      }
+}
+
+
+int main(int argc, char *argv[]) {
+	
+	
+	int tam = 10000;
+	int vetor[tam];
+    int tipoOrder=3;
+	
+	implementarVetorR(vetor,tam);
+
+	//GravTxt(vetor,tam);
+	
+	//LeitorTxt();
+	
+	printf("/n /n ordenado /n /n ");
+	
+    switch (tipoOrder){
+    	
+    	case 1 :
+    	
+    	selectionSort(vetor,tam);
+   	
+    	break;
+    	
+    	case 2 :
+    	
+   		insertionSort(vetor, tam);
+    	
+    	break;
+    	
+    	case 3 :
+    	
+    	quickSort(vetor, 0, tam);	
+    	
+    	break;
+    	
+    	case 4 :
+    		
+    	merge(vetor, tam);	
+    	mergeSort(vetor, tam);	
+    	
+    	break;
+    	
+       	case 5 :
+    	
+    	shellSort(vetor, tam);	
+    	
+    	break;
+    	
+      	case 6 :
+    	
+    	heapSort(vetor, tam);	
+    	
+    	break;
+    	
+    	case 7 :
+    	
+    	bubbleSort(vetor,tam);
+    	
+    	break;
+    	
+    	
+    	
+   	
+	}
+	
+	GravTxt(vetor,tam);
+	
+	LeitorTxt();
+	
+//	  printf("\n\n Ordenado\n\n");
+//    imprimirVetor(vetor,tam);
+	
+	
+    printf("\n\n Numero de trocas : ");	
+    printf("\n\n %d \n\n",troca);
+    printf("\n\n Numero de comparacao : ");	
+    printf("\n\n %d \n\n",comparacao);   	
+    printf("\n\n ");
+   	
+   	
+   	
+	
+	
+	return 0;
+}
